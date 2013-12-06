@@ -1,10 +1,5 @@
 Queries	
   
-§ 
-§ 
-§ 
-§ 
-§ 
 /tweets	
   {„username“:	-> string
   „wl“,			
