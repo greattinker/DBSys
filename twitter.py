@@ -12,9 +12,6 @@ from directory import directory
 fdb.api_version(100)
 
 
-#db = fdb.open()
-#twitter = directory.create_or_open(db, ('twitter',))	
-
 class twitter (object) :
 	def __init__(self, subspace) :
 		fdb.api_version(100)
@@ -29,6 +26,8 @@ class twitter (object) :
 	@fdb.transactional
 	def cleanDB(self, tr) :
 		tr.clear_range_startswith(self._directory)
+		
+		
 
 class user (twitter):
 	def __init__ (self) :
@@ -60,7 +59,7 @@ class tweet(twitter):
 	def __init__ (self) :
 		super(tweet, self).__init__('tweet')
 	
-	def addTweetDB(self, username, created, body) :
+	def addTweet(self, username, created, body) :
 		self.addTweetDB(self._db, username, created, body)
 	
 	@fdb.transactional
@@ -97,29 +96,29 @@ class follow(twitter) :
 	
 	@fdb.transactional
 	def followsDB(self, tr, user, follows) :
-		tr[self.__follow_space.pack((user,follows))] = ''
-		tr[self.__follow_by_space.pack((follows,user))] = ''
+		tr[self._follow_space.pack((user,follows))] = ''
+		tr[self._follow_by_space.pack((follows,user))] = ''
 	
 	def resign(self, user, follows) :
 		self.resignDB(self._db, user, follows)
 	
 	@fdb.transactional
 	def resignDB(self, tr, user, follows) :
-		del tr[self.__follow_space.pack((user,follows))] 
-		del tr[self.__follow_by_space.pack((follows,user))] 
+		del tr[self._follow_space.pack((user,follows))] 
+		del tr[self._follow_by_space.pack((follows,user))] 
 		
-	def getFollowersForUser(self, user) :
+	def getFollowersOfUser(self, user) :
 		return self.getFollowersOfUserDB(self._db, user)
 		
 	@fdb.transactional
 	def getFollowersOfUserDB(self, tr, user) :
-		return [fdb.tuple.unpack(k)[3] for k,v in tr[self.__follow_by_space.range((user,))]]
+		return [fdb.tuple.unpack(k)[3] for k,v in tr[self._follow_by_space.range((user,))]]
 	
 	def getFollowing(self, user) :
 		return self.getFollowingDB(self._db, user)
 	
 	@fdb.transactional
 	def getFollowingDB(self, tr, user) :
-		return [fdb.tuple.unpack(k)[3] for k,v in tr[self.__follow_space.range((user,))]]
+		return [fdb.tuple.unpack(k)[3] for k,v in tr[self._follow_space.range((user,))]]
 
 

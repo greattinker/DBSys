@@ -6,24 +6,25 @@ from twitter import user, tweet, follow
 
 user = user()
 user.cleanAll()
-#tweet = tweet(twitter)
-#follow = follow(twitter)
+tweet = tweet()
+follow = follow()
 
-user.addUser("ich2")
+user.addUser("ich")
 user.addUser("du")
-#user.addUser(db, "er")
+user.addUser("er")
 
-##follow.follows(db, "du", "ich")
-##follow.follows(db, "er", "ich")
+follow.follows("du", "ich")
+follow.follows("er", "ich")
 users = user.getAllUsers()
 for u in users :
 	print u
 	
-##tweet.addTweet(db, "ich", None, "ein neuer tweet")
-#tweets = tweet.getTweetsForUser(db, "ich")
-#for t in tweets :
-#	print t
-
-#followers = follow.getFollowersOfUser(db, "ich")
-#for f in followers :
-#	print f
+tweet.addTweet("ich", None, "ein neuer tweet")
+print "tweets von ich"
+tweets = tweet.getTweetsForUser("ich")
+for t in tweets :
+	print t
+print "followers von ich"
+followers = follow.getFollowersOfUser("ich")
+for f in followers :
+	print f
