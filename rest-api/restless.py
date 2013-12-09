@@ -13,7 +13,7 @@ follow = follow()
 
 @app.route("/tweets/<string:username>", methods = ["GET"])
 def get_tweets(username):
-	return jsonify( { username: tweet.getTweetsForUser(username, 0, 40)})
+	return jsonify( { username: tweet.getTweetsForUser(str(username), 0, 40)})
 	
 @app.route("/post_tweet", methods = ["POST"])
 def post_tweet():
@@ -51,3 +51,4 @@ def import_tweets():
 	
 if __name__ == "__main__":
 	app.run(debug = True)
+	

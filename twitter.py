@@ -65,8 +65,7 @@ class tweet(twitter):
 	@fdb.transactional
 	def addTweetDB(self, tr, username, created, body) :
 		if created == None :
-			created = time.time()
-			created = created*1000 
+			created = time.time()*1000 
 		tr[self._subspace.pack((username,int(created)))] = str(body)
 		
 	def getTweet(self, username, created) :
