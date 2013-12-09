@@ -3,7 +3,6 @@
 import fdb
 import fdb.tuple
 import time
-from datetime import datetime
 import sys
 import struct
 sys.path.append('./python-layers/lib')
@@ -34,12 +33,12 @@ class user (twitter):
 	def __init__ (self) :
 		super(user, self).__init__('user')
 		
-	def addUser(self, username) :
-		self.addUserDB(self._db, username)
+	def addUser(self, username, password) :
+		self.addUserDB(self._db, username, password)
 	
 	@fdb.transactional
-	def addUserDB(self, tr, username) :
-		tr[self._subspace.pack((username,))] = ''
+	def addUserDB(self, tr, username, password) :
+		tr[self._subspace.pack((username,))] = str(password)
 		
 	def getUser(self, username) :
 		return self.getUserDB(self._db, username)
@@ -66,8 +65,8 @@ class tweet(twitter):
 	@fdb.transactional
 	def addTweetDB(self, tr, username, created, body) :
 		if created == None :
-			dt = datetime.now()
-			created = time.time()*1000 + dt.microsecond 
+			created = time.time()
+			created = created*1000 
 		tr[self._subspace.pack((username,int(created)))] = str(body)
 		
 	def getTweet(self, username, created) :
@@ -77,11 +76,11 @@ class tweet(twitter):
 	def getTweetDB(self, tr, username, created) :
 		return tr[self._subspace.pack((username, int(created)))]
 		
-	def getTweetsForUser(self, username) :
-		return self.getTweetsForUserDB(self._db, username)
+	def getTweetsForUser(self, username, limitstart, limit) :
+		return self.getTweetsForUserDB(self._db, username, limitstart, limit)
 		
 	@fdb.transactional
-	def getTweetsForUserDB(self, tr, username) :
+	def getTweetsForUserDB(self, tr, username, limitstart, limit) :
 		return [v for k,v in tr[self._subspace.range((username,))]]
 
 
