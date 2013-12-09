@@ -3,6 +3,7 @@
 import fdb
 import fdb.tuple
 import time
+from datetime import datetime
 import sys
 import struct
 sys.path.append('./python-layers/lib')
@@ -65,7 +66,8 @@ class tweet(twitter):
 	@fdb.transactional
 	def addTweetDB(self, tr, username, created, body) :
 		if created == None :
-			created = time.time() 
+			dt = datetime.now()
+			created = time.time()*1000 + dt.microsecond 
 		tr[self._subspace.pack((username,int(created)))] = str(body)
 		
 	def getTweet(self, username, created) :
