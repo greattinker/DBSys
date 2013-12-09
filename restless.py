@@ -1,7 +1,5 @@
 #!/usr/bin/python
-import sys
-sys.path.append('./../.')
-sys.path.append('./../python-layers/lib')
+
 from flask import Flask,jsonify,request
 from twitter import user, tweet, follow
 
