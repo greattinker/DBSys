@@ -1,3 +1,7 @@
+#!/usr/bin/python
+import sys
+sys.path.append('./../.')
+sys.path.append('./../python-layers/lib')
 from flask import Flask,jsonify,request
 from twitter import user, tweet, follow
 
@@ -9,7 +13,7 @@ follow = follow()
 
 @app.route("/tweets/<string:username>", methods = ["GET"])
 def get_tweets(username):
-	return jsonify( { username: tweet.getTweetsForUser(username)})
+	return jsonify( { username: tweet.getTweetsForUser(username, 0, 40)})
 	
 @app.route("/post_tweet", methods = ["POST"])
 def post_tweet():
@@ -31,7 +35,7 @@ def add_friend():
 def import_friends():
 	for x in request.json["friends"]:
 		follow.follows(x,request.json["username"])
-	return "Hammer, Bohrer, Zieher, Günther"
+	return "Hammer, Bohrer, Zieher, Guenther"
 	
 @app.route("/import_tweets", methods = ["POST"])
 def import_tweets():
@@ -46,4 +50,4 @@ def import_tweets():
 	#return "Der alte Walter ist ein ganz Kalter"
 	
 if __name__ == "__main__":
-	app.run(debug = True).
+	app.run(debug = True)
