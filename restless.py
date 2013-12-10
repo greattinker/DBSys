@@ -3,6 +3,9 @@
 from flask import Flask,jsonify,request
 from twitter import user, tweet, follow
 
+tweet = tweet()
+user = user()
+follow = follow()
 app = Flask(__name__)
 
 @app.route("/tweets/<string:username>", methods = ["GET"])
@@ -37,15 +40,12 @@ def import_tweets():
 		tweet.addTweet(request.json["username"], None, x)
 	return "Der alte Walter ist ein ganz Kalter"
 	
-@app.route("/add_user", methods = ["POST"])
-def import_tweets():
-	for x in request.json["body"]:
-		tweet.addTweet(request.json["username"], None, x)
-	return "Der alte Walter ist ein ganz Kalter"
+#@app.route("/add_user", methods = ["POST"])
+#def import_user():
+#	for x in request.json["body"]:
+#		tweet.addTweet(request.json["username"], None, x)
+#	return "Der alte Walter ist ein ganz Kalter"
 	
 if __name__ == "__main__":
 	app.run(debug = True)
-	tweet = tweet()
-	user = user()
-	follow = follow()
 	
