@@ -38,14 +38,14 @@ class user (twitter):
 	
 	@fdb.transactional
 	def addUserDB(self, tr, username, password) :
-		tr[self._subspace.pack((username,))] = str(password)
+		tr[self._subspace.pack((str(username),))] = str(password)
 		
 	def getUser(self, username) :
 		return self.getUserDB(self._db, username)
 	
 	@fdb.transactional
 	def getUserDB(self, tr, username) :
-		return tr[self._subspace.pack((username,))]
+		return tr[self._subspace.pack((str(username),))]
 	
 	def getAllUsers(self) :
 		return self.getAllUsersDB(self._db)
@@ -66,21 +66,21 @@ class tweet(twitter):
 	def addTweetDB(self, tr, username, created, body) :
 		if created == None :
 			created = time.time()*1000 
-		tr[self._subspace.pack((username,int(created)))] = str(body)
+		tr[self._subspace.pack((str(username),int(created)))] = str(body)
 		
 	def getTweet(self, username, created) :
 		return self.getTweetDB(self._db, username, created)
 		
 	@fdb.transactional
 	def getTweetDB(self, tr, username, created) :
-		return tr[self._subspace.pack((username, int(created)))]
+		return tr[self._subspace.pack(str((username), int(created)))]
 		
 	def getTweetsForUser(self, username, limitstart, limit) :
 		return self.getTweetsForUserDB(self._db, username, limitstart, limit)
 		
 	@fdb.transactional
 	def getTweetsForUserDB(self, tr, username, limitstart, limit) :
-		return [v for k,v in tr[self._subspace.range((username,))]]
+		return [v for k,v in tr[self._subspace.range((str(username),))]]
 
 
 
@@ -96,29 +96,29 @@ class follow(twitter) :
 	
 	@fdb.transactional
 	def followsDB(self, tr, user, follows) :
-		tr[self._follow_space.pack((user,follows))] = ''
-		tr[self._follow_by_space.pack((follows,user))] = ''
+		tr[self._follow_space.pack((str(user),str(follows)))] = ''
+		tr[self._follow_by_space.pack((str(follows),str(user)))] = ''
 	
 	def resign(self, user, follows) :
 		self.resignDB(self._db, user, follows)
 	
 	@fdb.transactional
 	def resignDB(self, tr, user, follows) :
-		del tr[self._follow_space.pack((user,follows))] 
-		del tr[self._follow_by_space.pack((follows,user))] 
+		del tr[self._follow_space.pack((str(user),str(follows)))] 
+		del tr[self._follow_by_space.pack((str(follows),str(user)))] 
 		
 	def getFollowersOfUser(self, user) :
 		return self.getFollowersOfUserDB(self._db, user)
 		
 	@fdb.transactional
 	def getFollowersOfUserDB(self, tr, user) :
-		return [fdb.tuple.unpack(k)[3] for k,v in tr[self._follow_by_space.range((user,))]]
+		return [fdb.tuple.unpack(k)[3] for k,v in tr[self._follow_by_space.range((str(user),))]]
 	
 	def getFollowing(self, user) :
 		return self.getFollowingDB(self._db, user)
 	
 	@fdb.transactional
 	def getFollowingDB(self, tr, user) :
-		return [fdb.tuple.unpack(k)[3] for k,v in tr[self._follow_space.range((user,))]]
+		return [fdb.tuple.unpack(k)[3] for k,v in tr[self._follow_space.range((str(user),))]]
 
 
