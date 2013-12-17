@@ -80,7 +80,12 @@ class tweet(twitter):
 		
 	@fdb.transactional
 	def getTweetsForUserDB(self, tr, username, limitstart, limit) :
-		return [v for k,v in tr[self._subspace.range((str(username),))]]
+		tweets = tr[self._subspace.range((str(username),))]
+		follow = follow()
+		following = getFollowing(username)
+		for v in following:
+			tweets += tr[self._subspace.range((str(v),))] 
+		return [v for k,v in tweets]
 
 
 
