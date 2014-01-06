@@ -57,34 +57,47 @@ class user (twitter):
 
 class tweet(twitter):
 	def __init__ (self) :
-		super(tweet, self).__init__('tweet')
+#		super(tweet, self).__init__('tweet')
+		super(tweet, self).__init__(None)
+		self._tweet_space = self._directory['tweet']
+		self._tweets_space = self._directory['tweets']
 	
 	def addTweet(self, username, created, body) :
 		self.addTweetDB(self._db, username, created, body)
+		self.addTweetForFriendsDB(self._db, username, created, body)
 	
 	@fdb.transactional
 	def addTweetDB(self, tr, username, created, body) :
 		if created == None :
 			created = time.time()*1000 
-		tr[self._subspace.pack((str(username),int(created)))] = str(body)
+		tr[self._tweet_space.pack((str(username),int(created)))] = str(body)
+		
+	@fdb.transactional
+	def addTweetForFriendsDB(self, tr, username, created, body) :
+		follows = follow()
+		friends = follows.getFollowing(username)
+		if created == None :
+			created = time.time()*1000 
+		for v in friends:
+			tr[self._tweets_space.pack((str(v),int(created),str(username)))] = str(body)
 		
 	def getTweet(self, username, created) :
 		return self.getTweetDB(self._db, username, created)
 		
 	@fdb.transactional
 	def getTweetDB(self, tr, username, created) :
-		return tr[self._subspace.pack(str((username), int(created)))]
+		return tr[self._tweet_space.pack(str((username), int(created)))]
 		
 	def getTweetsForUser(self, username, limitstart, limit) :
 		return self.getTweetsForUserDB(self._db, username, limitstart, limit)
 		
 	@fdb.transactional
 	def getTweetsForUserDB(self, tr, username, limitstart, limit) :
-		tweets = tr[self._subspace.range((str(username),))]
+		tweets = tr[self._tweet_space.range((str(username),))]
 		follows = follow()
 		following = follows.getFollowing(username)
 		for v in following:
-			tweets += tr[self._subspace.range((str(v),))] 
+			tweets += tr[self._tweet_space.range((str(v),))] 
 		return [v for k,v in tweets]
 
 
