@@ -76,6 +76,7 @@ class tweet(twitter):
 	def addTweetForFriendsDB(self, tr, username, created, body) :
 		follows = follow()
 		friends = follows.getFollowing(username)
+		print friends
 		if created == None :
 			created = time.time()*1000 
 		for v in friends:
@@ -93,15 +94,16 @@ class tweet(twitter):
 		
 	@fdb.transactional
 	def getTweetsForUserDB(self, tr, username, limitstart, limit) :
-		tweets = tr[self._tweet_space.range((str(username),))]
-		follows = follow()
-		following = follows.getFollowing(username)
-		for v in following:
-			tweets += tr[self._tweet_space.range((str(v),))] 
-		return [v for k,v in tweets]
-
-
-
+		#alltweets = tr[self._tweets_space.range((str(username),))]
+		#.get_range(limitstart,limit,reverse=True)
+		tweets = []
+		i = limitstart
+		for k,v in tr[self._tweets_space.range((str(username),))]:
+			tweets.append([fdb.tuple.unpack(k)[4],v])
+		tweets.reverse()
+		while len(tweets) > 40:
+			tweets.pop()
+		return tweets
 
 class follow(twitter) :
 	def __init__(self) :

@@ -1,5 +1,5 @@
 <?php
-$data = array("username" => "Hagrid", "body" => "new tweet4");                                                                    
+$data = array("username" => "Hagrid", "body" => "new tweet15");                                                                    
 #$data = array("username" => "Hagrid", "password" => "abc");                                                                    
 $data_string = json_encode($data);                                                                                   
  
@@ -14,4 +14,6 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 );                                                                                                                   
  
 $result = curl_exec($ch);
+
+echo $result;
 ?>
