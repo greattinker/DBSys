@@ -93,10 +93,18 @@ class tweet(twitter):
 		
 	@fdb.transactional
 	def getTweetsForUserDB(self, tr, username, limitstart, limit) :
-		return [v for k,v in tr[self._tweets_space.get_range(self._tweets_space.range((str(username),'','')),self._tweets_space.range((str(username),'\xFF','\xFF')),40,True)]]
+#		return [v for k,v in tr[self._tweets_space.get_range(self._tweets_space.range((str(username),'','')),self._tweets_space.range((str(username),'\xFF','\xFF')),40,True)]]
 
-
-
+		#alltweets = tr[self._tweets_space.range((str(username),))]
+		#.get_range(limitstart,limit,reverse=True)
+		tweets = []
+		i = limitstart
+		for k,v in tr[self._tweets_space.range((str(username),))]:
+			tweets.append([fdb.tuple.unpack(k)[4],v])
+		tweets.reverse()
+		while len(tweets) > 40:
+			tweets.pop()
+		return tweets
 
 class follow(twitter) :
 	def __init__(self) :

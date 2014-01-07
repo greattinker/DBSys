@@ -9,6 +9,11 @@ follow = follow()
 app = Flask(__name__)
 
 
+@app.route("/clear", methods = ["POST"])
+def clear():
+	tweet.cleanAll()
+	return "", 201
+	
 @app.route("/tweets", methods = ["POST"])
 def get_tweetspost():
 	username = request.json["username"]
@@ -33,7 +38,7 @@ def create_user():
 @app.route("/add_friend", methods = ["POST"])
 def add_friend():
 	follow.follows(request.json["username"],request.json["friend"])
-	return 201
+	return "", 201
 	
 @app.route("/import_friends", methods = ["POST"])
 def import_friends():
@@ -54,6 +59,16 @@ def import_tweets():
 #	for x in request.json["body"]:
 #		tweet.addTweet(request.json["username"], None, x)
 #	return "Der alte Walter ist ein ganz Kalter"
+
+@app.route("/get_friends", methods = ["POST"])
+def get_friends():
+	username = request.json["username"]
+	return jsonify( { username: follow.getFollowing(username)})
+	
+@app.route("/get_followers", methods = ["POST"])
+def get_followers():
+	username = request.json["username"]
+	return jsonify( { username: follow.getFollowersOfUser(username)}) 
 	
 if __name__ == "__main__":
 	app.run(debug = True)
