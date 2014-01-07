@@ -32,7 +32,7 @@ def create_user():
 	
 @app.route("/add_friend", methods = ["POST"])
 def add_friend():
-	follow.follows(request.json["friend"],request.json["username"])
+	follow.follows(request.json["username"],request.json["friend"])
 	return 201
 	
 @app.route("/import_friends", methods = ["POST"])
