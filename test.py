@@ -6,8 +6,8 @@ from datetime import datetime
 
 
 
-#user = user()
-###user.cleanAll()
+user = user()
+user.cleanAll()
 #tweet = tweet()
 #follow = follow()
 

@@ -8,6 +8,7 @@ import struct
 sys.path.append('./python-layers/lib')
 from subspace import Subspace
 from directory import directory
+from datetime import datetime
 
 fdb.api_version(100)
 
@@ -102,7 +103,7 @@ class tweet(twitter):
 		tweets = []
 		i = limitstart
 		for k,v in tr[self._tweets_space.range((str(username),))]:
-			alltweets.append([fdb.tuple.unpack(k)[4],v])
+			alltweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]/1000),fdb.tuple.unpack(k)[4],v])
 		while len(tweets) < 40 and len(alltweets) > 0:
 			tweets.append(alltweets.pop())
 		return tweets
