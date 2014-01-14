@@ -84,18 +84,25 @@ class tweet(twitter):
 			tr[self._tweets_space.pack((str(v),int(created)))] = str(username)
 			
 	def import_tweets(self, username, timestamps, bodies) :
-		self.import_tweetsDB(self._db, username, timestamps, bodies)
+		self.import_tweetsBodiesDB(self._db, username, timestamps, bodies)
+		self.import_tweetsFriendsDB(self._db, username, timestamps, bodies)
 		
 	@fdb.transactional
-	def import_tweetsDB(self, tr, username, timestamps, bodies) :
-		follows = follow()
-		friends = follows.getFollowing(username)
+	def import_tweetsBodiesDB(self, tr, username, timestamps, bodies) :
 		for body,created in zip(bodies, timestamps):
 			if created == None :
 				created = time.time()*1000 
 			tr[self._tweet_space.pack((str(username),int(created)))] = str(body)
+			
+	@fdb.transactional
+	def import_tweetsFriendsDB(self, tr, username, timestamps, bodies) :
+		follows = follow()
+		friends = follows.getFollowing(username)
+		for body,created in zip(bodies, timestamps):
 			for v in friends:
-				tr[self._tweets_space.pack((str(v),int(created)))] = str(username)
+				if created == None :
+					created = time.time()*1000 
+					tr[self._tweets_space.pack((str(v),int(created)))] = str(username)
 		
 	def getTweet(self, username, created) :
 		return self.getTweetDB(self._db, username, created)
