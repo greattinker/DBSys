@@ -1,18 +1,17 @@
 #!/usr/bin/python
 
 from flask import Flask, jsonify, request, abort
-from twitter import user, tweet, follow
+from twitter2 import user, tweet, follow
 
 tweet = tweet()
 user = user()
 follow = follow()
 app = Flask(__name__)
 
-
 @app.route("/tweets", methods = ["POST"])
 def get_tweetspost():
 	username = request.json["username"]
-	return jsonify( { username: tweet.getTweetsForUser(str(username), 0, 40)})
+	return jsonify( {username: tweet.getTweetsForUser(str(username), 0, 40)})
 
 @app.route("/tweets/<string:username>", methods = ["GET"])
 def get_tweets(username):

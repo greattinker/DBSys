@@ -1,6 +1,6 @@
 <?php
-$data = array("username" => "Hagrid", "body" => "new tweet15");                                                                    
-#$data = array("username" => "Hagrid", "password" => "abc");                                                                    
+#$data = array("username" => "Hagrid", "body" => "new tweet15");                                                                    
+$data = array("username" => "Hagrid", "password" => "abc");                                                                    
 $data_string = json_encode($data);                                                                                   
  
 $ch = curl_init('http://127.0.0.1:5000/post_tweet');
