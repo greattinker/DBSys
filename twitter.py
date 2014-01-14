@@ -102,6 +102,7 @@ class tweet(twitter):
 			alltweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]/1000),fdb.tuple.unpack(k)[4],v])
 		while len(tweets) < 40 and len(alltweets) > 0:
 			tweets.append(alltweets.pop())
+		print tweets
 		return tweets
 
 class follow(twitter) :
