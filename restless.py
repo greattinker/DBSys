@@ -57,8 +57,9 @@ def import_friends():
 def import_tweets():
 	bodies = request.json["bodies"]
 	timestamps = request.json["timestamps"]
-	for x,t in zip(bodies, timestamps):
-		tweet.addTweet(str(request.json["username"]), int(t), str(x))
+#	for x,t in zip(bodies, timestamps):
+#		tweet.addTweet(str(request.json["username"]), int(t), str(x))
+	tweet.import_tweets(str(request.json["username"]), timestamps, bodies)
 	return "", 201
 	
 #@app.route("/add_user", methods = ["POST"])
