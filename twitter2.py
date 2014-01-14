@@ -84,8 +84,7 @@ class tweet(twitter):
 			tr[self._tweets_space.pack((str(v),int(created)))] = str(username)
 			
 	def import_tweets(self, username, timestamps, bodies) :
-		t = self.addTweetDB(self._db, username, created, body)
-		self.addTweetForFriendsDB(self._db, username, t, body)
+		self.import_tweetsDB(self._db, username, timestamps, bodies)
 		
 	@fdb.transactional
 	def import_tweetsDB(self, tr, username, timestamps, bodies) :
