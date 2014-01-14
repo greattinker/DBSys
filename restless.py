@@ -48,8 +48,9 @@ def add_friend():
 def import_friends():
 	friends = request.json["friends"]
 	username = request.json["username"]
-	for x in friends:
-		follow.follows(x,username)
+#	for x in friends:
+#		follow.follows(x,username)
+	follow.import_follows(friends,username)
 	return "", 201
 	
 @app.route("/import_tweets", methods = ["POST"])

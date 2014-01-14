@@ -113,12 +113,22 @@ class follow(twitter) :
 		self._follow_space = self._directory['follow']
 		self._follow_by_space = self._directory['follow_by']
 	
+	
+	def import_follows(self, friends, user) :
+		self.import_followsDB(self._db, friends, user)
+	
+	@fdb.transactional
+	def import_followsDB(self, tr, friends, user) :
+		for friend in friends:
+			tr[self._follow_space.pack((str(friend),str(user)))] = ''
+			tr[self._follow_by_space.pack((str(user),str(friend)))] = ''
+		
 	def follows(self, user, follows) :
 		self.followsDB(self._db, user, follows)
 	
 	@fdb.transactional
 	def followsDB(self, tr, user, follows) :
-#		tr[self._follow_space.pack((str(user),str(follows)))] = ''
+		tr[self._follow_space.pack((str(user),str(follows)))] = ''
 		tr[self._follow_by_space.pack((str(follows),str(user)))] = ''
 	
 	def resign(self, user, follows) :
@@ -126,7 +136,7 @@ class follow(twitter) :
 	
 	@fdb.transactional
 	def resignDB(self, tr, user, follows) :
-#		del tr[self._follow_space.pack((str(user),str(follows)))] 
+		del tr[self._follow_space.pack((str(user),str(follows)))] 
 		del tr[self._follow_by_space.pack((str(follows),str(user)))] 
 		
 	def getFollowersOfUser(self, user) :
