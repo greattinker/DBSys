@@ -118,7 +118,7 @@ class follow(twitter) :
 	
 	@fdb.transactional
 	def followsDB(self, tr, user, follows) :
-		tr[self._follow_space.pack((str(user),str(follows)))] = ''
+#		tr[self._follow_space.pack((str(user),str(follows)))] = ''
 		tr[self._follow_by_space.pack((str(follows),str(user)))] = ''
 	
 	def resign(self, user, follows) :
@@ -126,7 +126,7 @@ class follow(twitter) :
 	
 	@fdb.transactional
 	def resignDB(self, tr, user, follows) :
-		del tr[self._follow_space.pack((str(user),str(follows)))] 
+#		del tr[self._follow_space.pack((str(user),str(follows)))] 
 		del tr[self._follow_by_space.pack((str(follows),str(user)))] 
 		
 	def getFollowersOfUser(self, user) :
