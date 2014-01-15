@@ -44,8 +44,6 @@ def add_friend():
 def import_friends():
 	friends = request.json["friends"]
 	username = request.json["username"]
-#	for x in friends:
-#		follow.follows(x,username)
 	follow.import_follows(friends,username)
 	return "", 201
 	
@@ -53,16 +51,8 @@ def import_friends():
 def import_tweets():
 	bodies = request.json["bodies"]
 	timestamps = request.json["timestamps"]
-#	for x,t in zip(bodies, timestamps):
-#		tweet.addTweet(str(request.json["username"]), int(t), str(x))
 	tweet.import_tweets(str(request.json["username"]), timestamps, bodies)
 	return "", 201
-	
-#@app.route("/add_user", methods = ["POST"])
-#def import_user():
-#	for x in request.json["body"]:
-#		tweet.addTweet(request.json["username"], None, x)
-#	return "Der alte Walter ist ein ganz Kalter"
 
 @app.route("/get_friends", methods = ["POST"])
 def get_friends():
