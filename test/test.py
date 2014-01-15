@@ -10,9 +10,9 @@ tweet = tweet()
 follow = follow()
 user = user()
 
-#users = user.getAllUsers()
-#for u in users :
-#	print u
+users = user.getAllUsers()
+for u in users :
+	print u
 	
 print "followers von user_1"
 followers = follow.getFollowersOfUser("user_1")
