@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 user = user()
-users = user.cleanAll()
+users = user.getAllUsers()
 for u in users :
 	print u
 #tweet = tweet()
