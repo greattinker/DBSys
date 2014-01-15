@@ -124,7 +124,7 @@ class tweet(twitter):
 #			alltweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]/1000),str(v),str(body)])
 #		while len(tweets) < 40 and len(alltweets) > 0:
 #			tweets.append(alltweets.pop())
-		print "hello you"
+		print username
 		tweets = []
 		tweets.append(str(tr[ self._tweets_space.range((username,)).start ]))
 		for k,v in tr.get_range(self._tweets_space.range((str(username),)).start, self._tweets_space.range((str(username),)).stop, 40, True):
