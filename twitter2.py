@@ -127,7 +127,7 @@ class tweet(twitter):
 		print username
 		tweets = []
 		
-		for k,v in tr.get_range_startswith(self._tweets_space.pack((str(username))), 40, True):
+		for k,v in tr.get_range_startswith(self._tweets_space.pack((str(username),)), 40, True):
 			friend = v
 			body = tr[self._tweet_space.pack((str(friend),fdb.tuple.unpack(k)[3]))]
 			tweets.append(friend)
