@@ -10,14 +10,15 @@ tweet = tweet()
 follow = follow()
 user = user()
 
-users = user.getAllUsers()
-for u in users :
-	print u
-	
-print "followers von user_1"
-followers = follow.getFollowersOfUser("user_1")
-for f in followers :
-	print f
+#users = user.getAllUsers()
+#for u in users :
+#	print u
+#	
+#print "followers von user_1"
+#followers = follow.getFollowersOfUser("user_1")
+#for f in followers :
+#	print f
+print tweet.getTweet('user_1','1389791776464')
 
 #user.addUser("ich", "pass1")
 #user.addUser("du", "pass2")
