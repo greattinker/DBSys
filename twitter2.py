@@ -85,7 +85,10 @@ class tweet(twitter):
 			
 	def import_tweets(self, username, timestamps, bodies) :
 		self.import_tweetsBodiesDB(self._db, username, timestamps, bodies)
-		self.import_tweetsFriendsDB(self._db, username, timestamps, bodies)
+		follows = follow()
+		friends = follows.getFollowing(username)
+		for friend in friends:
+			self.import_tweetsFriendsDB(self._db, username, friend, timestamps)
 		
 	@fdb.transactional
 	def import_tweetsBodiesDB(self, tr, username, timestamps, bodies) :
@@ -95,14 +98,11 @@ class tweet(twitter):
 			tr[self._tweets_space.pack((str(username),int(created)))] = str(body)
 			
 	@fdb.transactional
-	def import_tweetsFriendsDB(self, tr, username, timestamps, bodies) :
-		follows = follow()
-		friends = follows.getFollowing(username)
+	def import_tweetsFriendsDB(self, tr, username, friend, timestamps) :
 		for created in timestamps:
-			for friend in friends:
-				if created == None :
-					created = time.time()*1000 
-				tr[self._friends_space.pack((str(friend),int(created)))] = str(username)
+			if created == None :
+				created = time.time()*1000 
+			tr[self._friends_space.pack((str(friend),int(created)))] = str(username)
 		
 	def getTweet(self, username, created) :
 		return self.getTweetDB(self._db, username, created)
