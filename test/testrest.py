@@ -3,7 +3,7 @@
 import httplib, urllib
 import json
 
-params = json.dumps( {"username": "user_0"} )
+params = json.dumps( {"username": "user_1"} )
 print params
 
 headers = {"Content-type": "application/json", "Accept": "*/*"}
