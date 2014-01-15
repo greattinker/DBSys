@@ -69,7 +69,7 @@ class tweet(twitter):
 	@fdb.transactional
 	def addTweetDB(self, tr, username, created, body) :
 		if created == None :
-			created = time.time()*1000 
+			created = time.time() 
 		tr[self._tweets_space.pack((str(username),int(created)))] = str(body)
 		return created
 		
@@ -78,7 +78,7 @@ class tweet(twitter):
 		follows = follow()
 		friends = follows.getFollowing(username)
 		if created == None :
-			created = time.time()*1000 
+			created = time.time() 
 		for friend in friends:
 			tr[self._friends_space.pack((str(friend),int(created)))] = str(username)
 			
@@ -94,14 +94,14 @@ class tweet(twitter):
 		for body,created in zip(bodies, timestamps):
 			if created == None :
 				created = time.time() 
-			tr[self._tweets_space.pack((str(username),int(created*1000)))] = str(body)
+			tr[self._tweets_space.pack((str(username),int(created)))] = str(body)
 			
 	@fdb.transactional
 	def import_tweetsFriendsDB(self, tr, username, friend, timestamps) :
 		for created in timestamps:
 			if created == None :
 				created = time.time() 
-			tr[self._friends_space.pack((str(friend),int(created*1000)))] = str(username)
+			tr[self._friends_space.pack((str(friend),int(created)))] = str(username)
 		
 	def getTweet(self, username, created) :
 		return self.getTweetDB(self._db, username, created)
@@ -126,7 +126,7 @@ class tweet(twitter):
 		tweets = []		
 		for k,friend in tr.get_range_startswith(self._friends_space.pack((str(username),)), 40, True):
 			body = tr[self._tweets_space.pack((str(friend),fdb.tuple.unpack(k)[3]))]
-			tweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]/1000),str(friend),str(body)])
+			tweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]),str(friend),str(body)])
 		return tweets
 
 class follow(twitter) :
