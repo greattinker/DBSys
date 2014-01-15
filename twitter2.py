@@ -58,7 +58,6 @@ class user (twitter):
 
 class tweet(twitter):
 	def __init__ (self) :
-#		super(tweet, self).__init__('tweet')
 		super(tweet, self).__init__(None)
 		self._tweets_space = self._directory['tweets']
 		self._friends_space = self._directory['friends']
