@@ -63,9 +63,8 @@ class tweet(twitter):
 		self._friends_space = self._directory['friends']
 	
 	def addTweet(self, username, created, body) :
-		t = self.addTweetDB(self._db, username, created, body)
-		print '%d' % int(t)
-		self.addTweetForFriendsDB(self._db, username, t)
+		createdN = self.addTweetDB(self._db, username, created, body)
+		self.addTweetForFriendsDB(self._db, username, createdN)
 	
 	@fdb.transactional
 	def addTweetDB(self, tr, username, created, body) :
@@ -80,8 +79,8 @@ class tweet(twitter):
 		friends = follows.getFollowing(username)
 		if created == None :
 			created = time.time()*1000 
-		for v in friends:
-			tr[self._friends_space.pack((str(v),int(created)))] = str(username)
+		for friend in friends:
+			tr[self._friends_space.pack((str(friend),int(created)))] = str(username)
 			
 	def import_tweets(self, username, timestamps, bodies) :
 		self.import_tweetsBodiesDB(self._db, username, timestamps, bodies)
