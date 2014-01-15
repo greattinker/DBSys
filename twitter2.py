@@ -60,8 +60,8 @@ class tweet(twitter):
 	def __init__ (self) :
 #		super(tweet, self).__init__('tweet')
 		super(tweet, self).__init__(None)
-		self._tweet_space = self._directory['tweets']
-		self._tweets_space = self._directory['friends']
+		self._tweets_space = self._directory['tweets']
+		self._friends_space = self._directory['friends']
 	
 	def addTweet(self, username, created, body) :
 		t = self.addTweetDB(self._db, username, created, body)
