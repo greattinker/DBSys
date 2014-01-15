@@ -64,6 +64,7 @@ class tweet(twitter):
 	
 	def addTweet(self, username, created, body) :
 		t = self.addTweetDB(self._db, username, created, body)
+		print t
 		self.addTweetForFriendsDB(self._db, username, t, body)
 	
 	@fdb.transactional
