@@ -130,7 +130,7 @@ class tweet(twitter):
 #			body = tr[self._tweets_space.pack((str(friend),fdb.tuple.unpack(k)[3]))]
 #			tweets.append([str(k)])
 #			tweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]/1000),str(friend),str(body)])
-		return alltweets
+		return tweets
 
 class follow(twitter) :
 	def __init__(self) :
