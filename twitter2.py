@@ -125,7 +125,7 @@ class tweet(twitter):
 #		while len(tweets) < 40 and len(alltweets) > 0:
 #			tweets.append(alltweets.pop())
 		tweets = []		
-		for k,v in tr.get_range_startswith(self._tweets_space.key(), 40, True):
+		for k,v in tr.get_range_startswith(self._tweets_space.pack((username,)), 40, True):
 			friend = v
 			body = tr[self._tweet_space.pack((str(friend),fdb.tuple.unpack(k)[3]))]
 			tweets.append(str(k))
