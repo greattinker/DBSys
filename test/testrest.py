@@ -11,4 +11,4 @@ conn = httplib.HTTPConnection("localhost:5000")
 conn.request("POST", "/tweets", params, headers)
 
 response = conn.getresponse()
-print response.status, response.reason, response
+print response.status, response.read()
