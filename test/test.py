@@ -6,12 +6,18 @@ from datetime import datetime
 
 
 
+tweet = tweet()
+follow = follow()
 user = user()
-users = user.getAllUsers()
-for u in users :
-	print u
-#tweet = tweet()
-#follow = follow()
+
+#users = user.getAllUsers()
+#for u in users :
+#	print u
+	
+print "followers von user_1"
+followers = follow.getFollowersOfUser("user_1")
+for f in followers :
+	print f
 
 #user.addUser("ich", "pass1")
 #user.addUser("du", "pass2")
@@ -30,7 +36,3 @@ for u in users :
 #tweets = tweet.getTweetsForUser("Hagrid", 0, 40)
 #for t in tweets :
 #	print t
-#print "followers von ich"
-#followers = follow.getFollowersOfUser("ich")
-#for f in followers :
-#	print f
