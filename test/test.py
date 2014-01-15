@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-from twitter import user, tweet, follow 
+from twitter2 import user, tweet, follow 
 import time
 from datetime import datetime
 
