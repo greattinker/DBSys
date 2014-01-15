@@ -126,9 +126,9 @@ class tweet(twitter):
 #			tweets.append(alltweets.pop())
 		tweets = []
 		for k in tr.get_range(self._tweets_space.range((str(username),)).start, self._tweets_space.range((str(username),)).stop, 40, True):
-			friend = tr.get(k)
+			friend = tr[k]
 			body = tr[self._tweet_space.pack((str(friend),fdb.tuple.unpack(k)[3]))]
-			tweets.append(fdb.tuple.unpack(k)[3])
+			tweets.append(friend)
 			tweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]/1000),str(friend),str(body)])
 		return tweets
 
