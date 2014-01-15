@@ -126,10 +126,10 @@ class tweet(twitter):
 #			tweets.append(alltweets.pop())
 		tweets = []
 		for k in tr.get_range(str(self._tweets_space.range((str(username),''))), str(self._tweets_space.range((str(username),'\xFF'))), 40, True):
-#			friend = tr.get(k)
-#			body = tr[self._tweet_space.pack((str(friend),fdb.tuple.unpack(k)[3]))]
+			friend = tr.get(k)
+			body = tr[self._tweet_space.pack((str(friend),fdb.tuple.unpack(k)[3]))]
 			print fdb.tuple.unpack(k)[3]
-#			tweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]/1000),str(friend),str(body)])
+			tweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]/1000),str(friend),str(body)])
 		return tweets
 
 class follow(twitter) :
