@@ -60,8 +60,8 @@ class tweet(twitter):
 	def __init__ (self) :
 #		super(tweet, self).__init__('tweet')
 		super(tweet, self).__init__(None)
-		self._tweet_space = self._directory['tweet']
-		self._tweets_space = self._directory['tweets']
+		self._tweet_space = self._directory['tweets']
+		self._tweets_space = self._directory['friends']
 	
 	def addTweet(self, username, created, body) :
 		t = self.addTweetDB(self._db, username, created, body)
@@ -71,7 +71,7 @@ class tweet(twitter):
 	def addTweetDB(self, tr, username, created, body) :
 		if created == None :
 			created = time.time()*1000 
-		tr[self._tweet_space.pack((str(username),int(created)))] = str(body)
+		tr[self._tweets_space.pack((str(username),int(created)))] = str(body)
 		return created
 		
 	@fdb.transactional
@@ -81,7 +81,7 @@ class tweet(twitter):
 		if created == None :
 			created = time.time()*1000 
 		for v in friends:
-			tr[self._tweets_space.pack((str(v),int(created)))] = str(username)
+			tr[self._friends_space.pack((str(v),int(created)))] = str(username)
 			
 	def import_tweets(self, username, timestamps, bodies) :
 		self.import_tweetsBodiesDB(self._db, username, timestamps, bodies)
@@ -92,7 +92,7 @@ class tweet(twitter):
 		for body,created in zip(bodies, timestamps):
 			if created == None :
 				created = time.time()*1000 
-			tr[self._tweet_space.pack((str(username),int(created)))] = str(body)
+			tr[self._tweets_space.pack((str(username),int(created)))] = str(body)
 			
 	@fdb.transactional
 	def import_tweetsFriendsDB(self, tr, username, timestamps, bodies) :
@@ -102,14 +102,14 @@ class tweet(twitter):
 			for v in friends:
 				if created == None :
 					created = time.time()*1000 
-					tr[self._tweets_space.pack((str(v),int(created)))] = str(username)
+					tr[self._friends_space.pack((str(v),int(created)))] = str(username)
 		
 	def getTweet(self, username, created) :
 		return self.getTweetDB(self._db, username, created)
 		
 	@fdb.transactional
 	def getTweetDB(self, tr, username, created) :
-		return tr[self._tweet_space.pack((str(username), int(created)))]
+		return tr[self._tweets_space.pack((str(username), int(created)))]
 		
 	def getTweetsForUser(self, username, limitstart, limit) :
 		return self.getTweetsForUserDB(self._db, username, limitstart, limit)
@@ -119,15 +119,15 @@ class tweet(twitter):
 		alltweets = []
 		tweets = []
 		i = limitstart
-		for k,v in tr[self._tweets_space.range((str(username),))]:
-			body = tr[self._tweet_space.pack((str(v),fdb.tuple.unpack(k)[3]))]
+		for k,v in tr[self._friends_space.range((str(username),))]:
+			body = tr[self._tweets_space.pack((str(v),fdb.tuple.unpack(k)[3]))]
 			alltweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]/1000),str(v),str(body)])
 		while len(tweets) < 40 and len(alltweets) > 0:
 			tweets.append(alltweets.pop())
 #		tweets = []		
-#		for k,v in tr.get_range_startswith(self._tweets_space.pack((str(username),)), 40, True):
+#		for k,v in tr.get_range_startswith(self._friends_space.pack((str(username),)), 40, True):
 #			friend = v
-#			body = tr[self._tweet_space.pack((str(friend),fdb.tuple.unpack(k)[3]))]
+#			body = tr[self._tweets_space.pack((str(friend),fdb.tuple.unpack(k)[3]))]
 #			tweets.append([str(k)])
 #			tweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]/1000),str(friend),str(body)])
 		return tweets
