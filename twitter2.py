@@ -125,10 +125,8 @@ class tweet(twitter):
 #		while len(tweets) < 40 and len(alltweets) > 0:
 #			tweets.append(alltweets.pop())
 		tweets = []		
-		for k,v in tr.get_range_startswith(self._friends_space.pack((str(username),)), 40, True):
-			friend = v
+		for k,friend in tr.get_range_startswith(self._friends_space.pack((str(username),)), 40, True):
 			body = tr[self._tweets_space.pack((str(friend),fdb.tuple.unpack(k)[3]))]
-			tweets.append([str(k)])
 			tweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]/1000),str(friend),str(body)])
 		return tweets
 
