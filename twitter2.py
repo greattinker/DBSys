@@ -39,7 +39,7 @@ class user (twitter):
 	
 	@fdb.transactional
 	def addUserDB(self, tr, username, password) :
-		tr[self._subspace.pack((str(username),))] = str(password)
+		tr[self._subspace.pack((str(username),))] = ''
 		
 	def getUser(self, username) :
 		return self.getUserDB(self._db, username)
