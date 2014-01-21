@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from flask import Flask, jsonify, request, abort
-from twitter2 import user, tweet, follow
+from twitter import user, tweet, follow
 
 tweet = tweet()
 user = user()
