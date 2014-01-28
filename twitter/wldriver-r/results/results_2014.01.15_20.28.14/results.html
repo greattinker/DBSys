@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Multi-Mechanize - Results</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="Content-Language" content="en" />
+    <style type="text/css">
+        body {
+            background-color: #FFFFFF;
+            color: #000000;
+            font-family: Verdana, sans-serif;
+            font-size: 11px;
+            padding: 5px;
+        }
+        h1 {
+            font-size: 16px;
+            background: #FF9933;
+            margin-bottom: 0;
+            padding-left: 5px;
+            padding-top: 2px;
+        }
+        h2 {
+            font-size: 13px;
+            background: #C0C0C0;
+            padding-left: 5px;
+            margin-top: 2em;
+            margin-bottom: .75em;
+        }
+        h3 {
+            font-size: 12px;
+            background: #EEEEEE;
+            padding-left: 5px;
+            margin-bottom: 0.5em;
+        }
+        h4 {
+            font-size: 11px;
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+        p {
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            margin-left: 10px;
+        }
+        td {
+            text-align: right;
+            color: #000000;
+            background: #FFFFFF;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 0;
+        }
+        th {
+            text-align: center;
+            padding-right: 10px;
+            padding-left: 10px;
+            color: #000000;
+            background: #FFFFFF;
+        }
+        div.summary {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Performance Results Report</h1>
+<h2>Summary</h2>
+<div class="summary">
+<b>transactions:</b> 745<br />
+<b>errors:</b> 0<br />
+<b>run time:</b> 30 secs<br />
+<b>rampup:</b> 10 secs<br /><br />
+<b>test start:</b> 2014-01-15 20:28:15<br />
+<b>test finish:</b> 2014-01-15 20:28:44<br /><br />
+<b>time-series interval:</b> 5 secs<br /><br /><br />
+<b>workload configuration:</b><br /><br />
+<table>
+<tr><th>group name</th><th>threads</th><th>script name</th></tr>
+<tr><td>user_group-1</td><td>100</td><td>read_user.py</td></tr>
+</table>
+</div>
+<h2>All Transactions</h2>
+<h3>Transaction Response Summary (secs)</h3>
+<table>
+<tr><th>count</th><th>min</th><th>avg</th><th>80pct</th><th>90pct</th><th>95pct</th><th>max</th><th>stdev</th></tr>
+<tr><td>745</td><td>0.044</td><td>3.514</td><td>4.622</td><td>4.635</td><td>4.652</td><td>4.684</td><td>1.464</td></tr>
+</table>
+<h3>Interval Details (secs)</h3>
+<table>
+<tr><th>interval</th><th>count</th><th>rate</th><th>min</th><th>avg</th><th>80pct</th><th>90pct</th><th>95pct</th><th>max</th><th>stdev</th></tr>
+<tr><td>1</td><td>107</td><td>21.40</td><td>0.044</td><td>0.828</td><td>1.315</td><td>1.466</td><td>1.538</td><td>1.600</td><td>0.461</td></tr>
+<tr><td>2</td><td>106</td><td>21.20</td><td>1.622</td><td>2.414</td><td>2.889</td><td>3.067</td><td>3.120</td><td>3.202</td><td>0.468</td></tr>
+<tr><td>3</td><td>109</td><td>21.80</td><td>3.204</td><td>3.958</td><td>4.425</td><td>4.571</td><td>4.611</td><td>4.619</td><td>0.432</td></tr>
+<tr><td>4</td><td>108</td><td>21.60</td><td>4.570</td><td>4.616</td><td>4.633</td><td>4.637</td><td>4.640</td><td>4.648</td><td>0.018</td></tr>
+<tr><td>5</td><td>108</td><td>21.60</td><td>4.599</td><td>4.639</td><td>4.666</td><td>4.676</td><td>4.677</td><td>4.684</td><td>0.023</td></tr>
+<tr><td>6</td><td>107</td><td>21.40</td><td>4.564</td><td>4.592</td><td>4.607</td><td>4.615</td><td>4.617</td><td>4.632</td><td>0.015</td></tr>
+</table>
+<h3>Graphs</h3>
+<h4>Response Time: 5 sec time-series</h4>
+<img src="All_Transactions_response_times_intervals.png"></img>
+<h4>Response Time: raw data (all points)</h4>
+<img src="All_Transactions_response_times.png"></img>
+<h4>Throughput: 5 sec time-series</h4>
+<img src="All_Transactions_throughput.png"></img>
+<hr />
+<h2>Custom Timer: get_tweets</h2>
+<h3>Timer Summary (secs)</h3>
+<table>
+<tr><th>count</th><th>min</th><th>avg</th><th>80pct</th><th>90pct</th><th>95pct</th><th>max</th><th>stdev</th></tr>
+<tr><td>645</td><td>0.044</td><td>3.514</td><td>4.621</td><td>4.634</td><td>4.652</td><td>4.684</td><td>1.464</td></tr>
+</table>
+<h3>Interval Details (secs)</h3>
+<table>
+<tr><th>interval</th><th>count</th><th>rate</th><th>min</th><th>avg</th><th>80pct</th><th>90pct</th><th>95pct</th><th>max</th><th>stdev</th></tr>
+<tr><td>1</td><td>107</td><td>21.40</td><td>0.044</td><td>0.827</td><td>1.315</td><td>1.465</td><td>1.538</td><td>1.599</td><td>0.461</td></tr>
+<tr><td>2</td><td>106</td><td>21.20</td><td>1.622</td><td>2.413</td><td>2.889</td><td>3.067</td><td>3.120</td><td>3.202</td><td>0.468</td></tr>
+<tr><td>3</td><td>109</td><td>21.80</td><td>3.204</td><td>3.958</td><td>4.424</td><td>4.571</td><td>4.611</td><td>4.619</td><td>0.432</td></tr>
+<tr><td>4</td><td>108</td><td>21.60</td><td>4.570</td><td>4.615</td><td>4.632</td><td>4.637</td><td>4.640</td><td>4.648</td><td>0.018</td></tr>
+<tr><td>5</td><td>108</td><td>21.60</td><td>4.599</td><td>4.639</td><td>4.666</td><td>4.676</td><td>4.677</td><td>4.684</td><td>0.023</td></tr>
+<tr><td>6</td><td>107</td><td>21.40</td><td>4.564</td><td>4.592</td><td>4.607</td><td>4.614</td><td>4.617</td><td>4.631</td><td>0.015</td></tr>
+</table>
+<h3>Graphs</h3>
+<h4>Response Time: 5 sec time-series</h4>
+<img src="get_tweets_response_times_intervals.png"></img>
+<h4>Response Time: raw data (all points)</h4>
+<img src="get_tweets_response_times.png"></img>
+<h4>Throughput: 5 sec time-series</h4>
+<img src="get_tweets_throughput.png"></img>
+<hr />
+</body>
+</html>
