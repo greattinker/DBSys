@@ -101,7 +101,7 @@ class tweet(twitter):
 		for created in timestamps:
 			if created == None :
 				created = time.time() 
-			tr[self._friends_space.pack((str(friend),int(created)))] = str(username)
+			tr[self._friends_space.pack((str(friend),int(created),str(username)))] = ''
 		
 	def getTweet(self, username, created) :
 		return self.getTweetDB(self._db, username, created)
@@ -124,9 +124,9 @@ class tweet(twitter):
 #		while len(tweets) < 40 and len(alltweets) > 0:
 #			tweets.append(alltweets.pop())
 		tweets = []		
-		for k,friend in tr.get_range_startswith(self._friends_space.pack((str(username),)), 40):
-			body = tr[self._tweets_space.pack((str(friend),fdb.tuple.unpack(k)[3]))]
-			tweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]),str(friend),str(body)])
+		for k,v in tr.get_range_startswith(self._friends_space.pack((str(username),)), 40, True):
+			body = tr[self._tweets_space.pack(fdb.tuple.unpack(k)[4],fdb.tuple.unpack(k)[3]))]
+			tweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]),str(fdb.tuple.unpack(k)[4]),str(body)])
 		return tweets
 
 class follow(twitter) :
