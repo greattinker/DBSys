@@ -16,7 +16,8 @@ fdb.api_version(100)
 class twitter (object) :
 	def __init__(self, subspace) :
 		fdb.api_version(100)
-		self._db = fdb.open('/home/gruppe5/fdbconf/fdb.cluster')
+#		self._db = fdb.open('/home/gruppe5/fdbconf/fdb.cluster')
+		self._db = fdb.open()
 		self._directory = directory.create_or_open(self._db, ('twitter2',))
 		if subspace != None :
 			self._subspace = self._directory[subspace]
@@ -125,7 +126,7 @@ class tweet(twitter):
 #			tweets.append(alltweets.pop())
 		tweets = []		
 		for k,v in tr.get_range_startswith(self._friends_space.pack((str(username),)), 40, True):
-			body = tr[self._tweets_space.pack(fdb.tuple.unpack(k)[4],fdb.tuple.unpack(k)[3]))]
+			body = tr[self._tweets_space.pack(fdb.tuple.unpack(k)[4],fdb.tuple.unpack(k)[3])]
 			tweets.append([datetime.fromtimestamp(fdb.tuple.unpack(k)[3]),str(fdb.tuple.unpack(k)[4]),str(body)])
 		return tweets
 
