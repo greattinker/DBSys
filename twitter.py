@@ -16,7 +16,8 @@ fdb.api_version(100)
 class twitter (object) :
 	def __init__(self, subspace) :
 		fdb.api_version(100)
-		self._db = fdb.open('/home/gruppe5/fdbconf/fdb.cluster')
+#		self._db = fdb.open('/home/gruppe5/fdbconf/fdb.cluster')
+		self._db = fdb.open()
 		self._directory = directory.create_or_open(self._db, ('twitter',))
 		if subspace != None :
 			self._subspace = self._directory[subspace]
